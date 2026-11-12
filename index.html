@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>오아시스 여행 항공 상황판</title>
+  <style>
+    :root{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#17211d;background:#f5f7f4;font-size:14px;line-height:1.4}
+    *{box-sizing:border-box}body{margin:0;padding:12px}.board{max-width:920px;margin:auto;border:1px solid #e1e8e2;border-radius:16px;background:#fff;overflow:hidden;box-shadow:0 5px 20px #15231a0b}
+    header{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:14px 16px 10px}.title{font-size:16px;font-weight:750;letter-spacing:-.02em}.subtitle{margin-top:3px;color:#64736a;font-size:12px}.updated{display:flex;align-items:center;gap:8px;text-align:right;color:#65736b;font-size:11px;white-space:nowrap}.updated strong{display:block;color:#23352b;font-weight:650}
+    button{font:inherit;cursor:pointer}.refresh{border:1px solid #d7e1d8;background:#f8fbf8;border-radius:9px;padding:6px 9px;color:#284b37;font-weight:650}.refresh:hover{background:#eff6f0}.toolbar{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:0 16px 11px}.tabs,.sorts{display:flex;gap:5px}.chip{border:1px solid transparent;border-radius:8px;background:transparent;color:#65736b;padding:6px 10px;font-weight:650}.chip[aria-selected="true"]{background:#e8f2e9;color:#1c6339;border-color:#d5e8d7}.sorts .chip[aria-selected="true"]{background:#f1f3f1;color:#22332a;border-color:#e0e5e0}
+    .hint{margin:0 16px 10px;border-radius:9px;background:#f6f8f6;color:#5f6e64;padding:7px 10px;font-size:11px}.hint.warn{background:#fff7e7;color:#76571a}.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;padding:0 16px 13px}.card{border:1px solid #e3e9e4;border-radius:12px;padding:11px 12px;min-width:0}.card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}.price{font-weight:780;font-size:17px;letter-spacing:-.02em}.per{font-size:10px;color:#728077;font-weight:500}.rank{border-radius:999px;background:#f0f3f0;color:#53635a;padding:3px 7px;font-size:10px;white-space:nowrap}.airline{margin-top:2px;color:#4e5d54;font-size:11px}.times{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:9px 0 6px}.timebox{border-radius:8px;background:#f7f9f7;padding:7px}.date{font-size:10px;color:#718077}.clock{font-size:14px;font-weight:720;margin-top:1px}.place{font-size:10px;color:#56665c}.route{margin-top:3px;font-size:10px;color:#627067}.facts{display:flex;flex-wrap:wrap;gap:5px;margin-top:7px}.fact{border:1px solid #e6ebe7;border-radius:6px;padding:3px 6px;color:#526158;font-size:10px}.connections{font-size:10px;color:#526158;margin-top:6px}.airport-note{margin-top:6px;color:#875b20;font-size:10px}.links{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}.links a{color:#23633b;text-decoration:none;font-size:10px;font-weight:700;border:1px solid #dbe8dd;border-radius:7px;padding:4px 7px}.links a:hover{text-decoration:underline;background:#f3f9f3}.compare{margin-top:6px;color:#758178;font-size:10px}.empty{padding:22px;text-align:center;color:#69766d;border:1px dashed #d6dfd7;border-radius:10px;grid-column:1/-1}.foot{border-top:1px solid #edf0ed;padding:9px 16px 11px;color:#78837b;font-size:10px;display:flex;justify-content:space-between;gap:12px}.foot a{color:#526d5a}
+    @media(max-width:620px){body{padding:0}.board{border-radius:0;border-left:0;border-right:0}.cards{grid-template-columns:1fr;padding-left:11px;padding-right:11px}header{padding:12px 11px 8px}.toolbar{padding:0 11px 9px}.hint{margin-left:11px;margin-right:11px}.foot{padding-left:11px;padding-right:11px}.updated{font-size:10px}}
+  </style>
+</head>
+<body>
+  <main class="board" aria-live="polite">
+    <header>
+      <div><div class="title">오아시스 여행 항공 상황판</div><div class="subtitle">Glasgow 공연 05.23 · 05.18 20시 이후 출국 · 05.24 오후 귀국 · 성인 2명</div></div>
+      <div class="updated"><span>요금 확인<strong id="checkedAt">불러오는 중</strong></span><button class="refresh" id="refresh" type="button" title="최신 상황판 데이터를 다시 불러옵니다">새로고침</button></div>
+    </header>
+    <nav class="toolbar" aria-label="목적지와 정렬">
+      <div class="tabs" role="tablist" aria-label="목적지"><button class="chip" role="tab" data-route="MAN" aria-selected="true">맨체스터</button><button class="chip" role="tab" data-route="LON" aria-selected="false">런던 대안</button></div>
+      <div class="sorts" role="tablist" aria-label="정렬"><button class="chip" role="tab" data-sort="price" aria-selected="true">최저가 2</button><button class="chip" role="tab" data-sort="duration" aria-selected="false">최단시간 2</button></div>
+    </nav>
+    <div id="status" class="hint">가격 상태 확인 중…</div>
+    <div id="groundNote" class="hint">공항 이동 정보 불러오는 중…</div>
+    <section id="cards" class="cards" aria-label="항공편 후보"></section>
+    <footer class="foot"><span>총 소요시간은 경유 대기시간을 포함한 왕복 각 편도시간의 합입니다. 요금은 1인 표시가입니다.</span><span><a href="https://flight.naver.com/" target="_blank" rel="noopener">Naver</a> · <a href="https://www.trip.com/flights/" target="_blank" rel="noopener">Trip.com</a> · <a href="https://www.skyscanner.co.kr/" target="_blank" rel="noopener">Skyscanner</a></span></footer>
+  </main>
+  <script>
+    const DATA_URL = new URL('./data/latest.json', location.href);
+    let dataset = null;
+    let currentRoute = 'MAN';
+    let currentSort = 'price';
+    const $ = (id) => document.getElementById(id);
+    const formatWon = (value) => new Intl.NumberFormat('ko-KR').format(value) + '원';
+    const formatTime = (iso, zone) => new Intl.DateTimeFormat('ko-KR',{hour:'2-digit',minute:'2-digit',hour12:false,timeZone:zone}).format(new Date(iso));
+    const formatDate = (iso, zone) => {
+      const dt = new Date(iso);
+      return new Intl.DateTimeFormat('ko-KR',{month:'numeric',day:'numeric',weekday:'short',timeZone:zone}).format(dt);
+    };
+    const durationText = (minutes) => `${Math.floor(minutes/60)}시간${String(minutes%60).padStart(2,'0')}분`;
+    const codeName = (code) => ({ICN:'인천',MAN:'맨체스터',LHR:'런던 히드로',LGW:'런던 개트윅',STN:'런던 스탠스테드',LCY:'런던 시티',LTN:'런던 루턴',SEN:'런던 사우스엔드',CPH:'코펜하겐',OSL:'오슬로',DXB:'두바이'}[code] || code) + `(${code})`;
+    const stamp = (value) => value ? new Intl.DateTimeFormat('ko-KR',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit',hour12:false,timeZone:'Asia/Seoul'}).format(new Date(value))+' KST' : '확인 전';
+    function byLowestFare(offer) {
+      return offer.fares.filter(x=>x.pricePerPersonKRW>0).sort((a,b)=>a.pricePerPersonKRW-b.pricePerPersonKRW)[0];
+    }
+    function render() {
+      if (!dataset) return;
+      $('checkedAt').textContent = stamp(dataset.lastSuccessfulSearchAt);
+      const status = dataset.refreshStatus || {};
+      $('status').className = 'hint' + (status.connected ? '' : ' warn');
+      $('status').textContent = status.connected
+        ? `가격 피드 연결됨 · 최근 자동 확인 시도 ${stamp(status.lastAttemptAt)}${status.message ? ' · '+status.message : ''}`
+        : `현재 표시는 ${stamp(dataset.lastSuccessfulSearchAt)}에 직접 확인한 스냅샷입니다. 자동 요금 피드는 미연결${status.lastAttemptAt ? ' · 마지막 자동 확인 시도 '+stamp(status.lastAttemptAt) : ''}. 아래 링크에서 각 플랫폼의 현재가를 확인하세요.`;
+      $('groundNote').textContent = currentRoute==='MAN'
+        ? '교통 참고: 5/24 MAN 출발편의 Glasgow→Manchester Airport 육상 이동과 체크인 여유는 항공편 소요시간에 포함되지 않습니다.'
+        : '교통 참고: 런던행은 Glasgow 공연장까지의 왕복 이동시간·비용이 항공편에 포함되지 않으며, 별도 이동 계획이 필요합니다.';
+      const offers = dataset.offers.filter(x=>x.destination===currentRoute && x.outbound.departureAt.startsWith(dataset.query.outboundDate) && x.return.departureAt.startsWith(dataset.query.returnDate));
+      const scored = offers.map(x=>({...x,lowest:byLowestFare(x),sumDuration:x.outbound.durationMinutes+x.return.durationMinutes})).filter(x=>x.lowest);
+      scored.sort(currentSort==='price' ? (a,b)=>a.lowest.pricePerPersonKRW-b.lowest.pricePerPersonKRW : (a,b)=>a.sumDuration-b.sumDuration);
+      const shown = scored.slice(0,2);
+      $('cards').innerHTML = shown.length ? shown.map((x,i)=>cardHtml(x,i)).join('') : '<div class="empty">이 조건을 모두 만족하는 확인된 항공편이 없습니다.</div>';
+    }
+    function cardHtml(x,index) {
+      const best=x.lowest;
+      const sortValue=currentSort==='price' ? `${index+1}위 · 요금` : `${index+1}위 · 왕복 ${durationText(x.sumDuration)}`;
+      const compare=x.fares.filter(f=>f!==best).map(f=>`${f.platform} ${formatWon(f.pricePerPersonKRW)}${f.fareNote?' ('+f.fareNote+')':''}`).join(' · ');
+      const returnAirportDiff=x.outbound.destinationCode!==x.return.originCode;
+      const estimatedTwo=best.totalForTwoKRW??best.pricePerPersonKRW*dataset.query.adults;
+      const fareBudgetNote=dataset.query.budgetPerPersonKRW && best.pricePerPersonKRW>dataset.query.budgetPerPersonKRW
+        ? `<span class="fact">1인 예산보다 ${formatWon(best.pricePerPersonKRW-dataset.query.budgetPerPersonKRW)} 초과</span>` : '';
+      const platformLinks=x.fares.map(f=>`<a href="${esc(f.searchUrl)}" target="_blank" rel="noopener" title="${esc(f.platform)} 검색 결과 열기">${esc(f.platform)} ↗</a>`).join('');
+      return `<article class="card">
+        <div class="card-top"><div><div class="price">${formatWon(best.pricePerPersonKRW)} <span class="per">/ 1인</span></div><div class="airline">${esc(x.airline)} · 최저가 ${esc(best.platform)}${best.fareNote?' · '+esc(best.fareNote):''}</div><div class="compare">2인 ${best.totalForTwoKRW?'표시 합계':'단순 환산'} ${formatWon(estimatedTwo)}</div></div><span class="rank">${sortValue}</span></div>
+        <div class="times"><div class="timebox"><div class="date">가는 편 · 현지시각</div><div class="clock">${formatTime(x.outbound.departureAt,'Asia/Seoul')} → ${formatTime(x.outbound.arrivalAt,'Europe/London')}</div><div class="place">${codeName('ICN')} → ${codeName(x.outbound.destinationCode)} · ${formatDate(x.outbound.departureAt,'Asia/Seoul')} 출발</div></div><div class="timebox"><div class="date">오는 편 · 현지시각</div><div class="clock">${formatTime(x.return.departureAt,'Europe/London')} → ${formatTime(x.return.arrivalAt,'Asia/Seoul')}</div><div class="place">${codeName(x.return.originCode)} → ${codeName('ICN')} · ${formatDate(x.return.departureAt,'Europe/London')} 출발</div></div></div>
+        <div class="facts"><span class="fact">가는 편 ${durationText(x.outbound.durationMinutes)}</span><span class="fact">오는 편 ${durationText(x.return.durationMinutes)}</span><span class="fact">왕복 합계 ${durationText(x.sumDuration)}</span>${fareBudgetNote}</div>
+        <div class="connections">경유: ${x.outbound.stops.length?x.outbound.stops.map(codeName).join(' → '):'없음'} / ${x.return.stops.length?x.return.stops.map(codeName).join(' → '):'없음'} · 대기시간 포함</div>
+        ${returnAirportDiff?`<div class="airport-note">런던 공항 변경: 도착 ${esc(x.outbound.destinationCode)} → 귀국 출발 ${esc(x.return.originCode)}</div>`:''}
+        <div class="links">${platformLinks}</div>${compare?`<div class="compare">다른 플랫폼: ${esc(compare)}</div>`:''}
+      </article>`;
+    }
+    function esc(value){return String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+    async function loadData(){
+      $('refresh').disabled=true; $('refresh').textContent='불러오는 중';
+      try { const url=new URL(DATA_URL); url.searchParams.set('v',Date.now()); const response=await fetch(url,{cache:'no-store'}); if(!response.ok) throw new Error(`HTTP ${response.status}`); dataset=await response.json(); render(); }
+      catch(error){$('status').className='hint warn';$('status').textContent='상황판 데이터 파일을 읽지 못했습니다. GitHub Pages 배포 상태를 확인하세요.'; if(!dataset)$('cards').innerHTML='<div class="empty">가격 데이터를 불러오지 못했습니다.</div>';}
+      finally{$('refresh').disabled=false;$('refresh').textContent='새로고침';}
+    }
+    document.querySelectorAll('[data-route]').forEach(b=>b.addEventListener('click',()=>{currentRoute=b.dataset.route;document.querySelectorAll('[data-route]').forEach(x=>x.setAttribute('aria-selected',String(x===b)));render();}));
+    document.querySelectorAll('[data-sort]').forEach(b=>b.addEventListener('click',()=>{currentSort=b.dataset.sort;document.querySelectorAll('[data-sort]').forEach(x=>x.setAttribute('aria-selected',String(x===b)));render();}));
+    $('refresh').addEventListener('click',loadData);
+    loadData(); setInterval(loadData,60*60*1000);
+  </script>
+</body>
+</html>
