@@ -1,0 +1,169 @@
+{
+  "query": {
+    "adults": 2,
+    "cabin": "economy",
+    "outboundDate": "2027-05-18",
+    "outboundLocalTimeAfter": "20:00",
+    "returnDate": "2027-05-24",
+    "returnLocalTimeFrom": "12:00",
+    "returnLocalTimeBefore": "18:00",
+    "budgetPerPersonKRW": 1100000,
+    "currency": "KRW",
+    "sources": ["Naver", "Trip.com", "Skyscanner"]
+  },
+  "lastSuccessfulSearchAt": "2026-11-12T14:32:00+09:00",
+  "refreshStatus": {
+    "connected": false,
+    "lastAttemptAt": null,
+    "message": "항공사 검색 API 미연결. 표시 가격은 조회 시점 스냅샷이며 예약 전 재확인 필요."
+  },
+  "offers": [
+    {
+      "id": "man-sas-2330-1245",
+      "destination": "MAN",
+      "airline": "Scandinavian Airlines",
+      "outbound": {
+        "departureAt": "2027-05-18T23:30:00+09:00",
+        "arrivalAt": "2027-05-19T12:05:00+01:00",
+        "originCode": "ICN",
+        "destinationCode": "MAN",
+        "durationMinutes": 1235,
+        "stops": ["CPH", "OSL"]
+      },
+      "return": {
+        "departureAt": "2027-05-24T12:45:00+01:00",
+        "arrivalAt": "2027-05-25T18:35:00+09:00",
+        "originCode": "MAN",
+        "destinationCode": "ICN",
+        "durationMinutes": 1310,
+        "stops": ["OSL", "CPH"]
+      },
+      "fares": [
+        {"platform":"Naver","pricePerPersonKRW":1356156,"fareNote":"모든 결제수단 표시가","searchUrl":"https://flight.naver.com/flights/international/ICN:airport-MAN:airport-20270518/MAN:airport-ICN:airport-20270524?adult=2&isDirect=false&fareType=Y"}
+      ]
+    },
+    {
+      "id": "man-sas-2330-0915-1245",
+      "destination": "MAN",
+      "airline": "Scandinavian Airlines",
+      "outbound": {
+        "departureAt": "2027-05-18T23:30:00+09:00",
+        "arrivalAt": "2027-05-19T09:15:00+01:00",
+        "originCode": "ICN",
+        "destinationCode": "MAN",
+        "durationMinutes": 1065,
+        "stops": ["CPH"]
+      },
+      "return": {
+        "departureAt": "2027-05-24T12:45:00+01:00",
+        "arrivalAt": "2027-05-25T18:35:00+09:00",
+        "originCode": "MAN",
+        "destinationCode": "ICN",
+        "durationMinutes": 1310,
+        "stops": ["OSL", "CPH"]
+      },
+      "fares": [
+        {"platform":"Skyscanner","pricePerPersonKRW":1380200,"totalForTwoKRW":2760400,"fareNote":"2인 검색 결과","searchUrl":"https://www.skyscanner.co.kr/transport/flights/icn/man/270518/270524/?adultsv2=2&cabinclass=economy&currency=KRW&locale=ko-KR&market=KR"},
+        {"platform":"Trip.com","pricePerPersonKRW":1546500,"totalForTwoKRW":3093000,"fareNote":"2인 합계 표시","searchUrl":"https://www.trip.com/flights/showfarefirst?dcity=icn&acity=man&ddate=2027-05-18&rdate=2027-05-24&triptype=rt&class=y&quantity=2&locale=en-XX&curr=KRW"}
+      ]
+    },
+    {
+      "id": "man-emirates-2355-1405",
+      "destination": "MAN",
+      "airline": "Emirates",
+      "outbound": {
+        "departureAt": "2027-05-18T23:55:00+09:00",
+        "arrivalAt": "2027-05-19T12:00:00+01:00",
+        "originCode": "ICN",
+        "destinationCode": "MAN",
+        "durationMinutes": 1205,
+        "stops": ["DXB"]
+      },
+      "return": {
+        "departureAt": "2027-05-24T14:05:00+01:00",
+        "arrivalAt": "2027-05-25T17:00:00+09:00",
+        "originCode": "MAN",
+        "destinationCode": "ICN",
+        "durationMinutes": 1135,
+        "stops": ["DXB"]
+      },
+      "fares": [
+        {"platform":"Naver","pricePerPersonKRW":1421100,"fareNote":"KB국민카드 조건","searchUrl":"https://flight.naver.com/flights/international/ICN:airport-MAN:airport-20270518/MAN:airport-ICN:airport-20270524?adult=2&isDirect=false&fareType=Y"},
+        {"platform":"Skyscanner","pricePerPersonKRW":1446100,"totalForTwoKRW":2892200,"fareNote":"2인 검색 결과","searchUrl":"https://www.skyscanner.co.kr/transport/flights/icn/man/270518/270524/?adultsv2=2&cabinclass=economy&currency=KRW&locale=ko-KR&market=KR"}
+      ]
+    },
+    {
+      "id": "lon-sas-2330-1700",
+      "destination": "LON",
+      "airline": "Scandinavian Airlines",
+      "outbound": {
+        "departureAt": "2027-05-18T23:30:00+09:00",
+        "arrivalAt": "2027-05-19T09:20:00+01:00",
+        "originCode": "ICN",
+        "destinationCode": "LHR",
+        "durationMinutes": 1070,
+        "stops": ["CPH"]
+      },
+      "return": {
+        "departureAt": "2027-05-24T17:00:00+01:00",
+        "arrivalAt": "2027-05-25T18:35:00+09:00",
+        "originCode": "LHR",
+        "destinationCode": "ICN",
+        "durationMinutes": 1055,
+        "stops": ["CPH"]
+      },
+      "fares": [
+        {"platform":"Naver","pricePerPersonKRW":1113500,"fareNote":"모든 결제수단 표시가","searchUrl":"https://flight.naver.com/flights/international/ICN:airport-LON:city-20270518/LON:city-ICN:airport-20270524?adult=2&isDirect=false&fareType=Y"},
+        {"platform":"Skyscanner","pricePerPersonKRW":1142700,"totalForTwoKRW":2285400,"fareNote":"2인 검색 결과","searchUrl":"https://www.skyscanner.co.kr/transport/flights/icn/lon/270518/270524/?adultsv2=2&cabinclass=economy&currency=KRW&locale=ko-KR&market=KR"}
+      ]
+    },
+    {
+      "id": "lon-sas-2330-1255",
+      "destination": "LON",
+      "airline": "Scandinavian Airlines",
+      "outbound": {
+        "departureAt": "2027-05-18T23:30:00+09:00",
+        "arrivalAt": "2027-05-19T12:55:00+01:00",
+        "originCode": "ICN",
+        "destinationCode": "LHR",
+        "durationMinutes": 1285,
+        "stops": ["CPH", "OSL"]
+      },
+      "return": {
+        "departureAt": "2027-05-24T17:00:00+01:00",
+        "arrivalAt": "2027-05-25T18:35:00+09:00",
+        "originCode": "LHR",
+        "destinationCode": "ICN",
+        "durationMinutes": 1055,
+        "stops": ["CPH"]
+      },
+      "fares": [
+        {"platform":"Naver","pricePerPersonKRW":1140490,"fareNote":"모든 결제수단 표시가","searchUrl":"https://flight.naver.com/flights/international/ICN:airport-LON:city-20270518/LON:city-ICN:airport-20270524?adult=2&isDirect=false&fareType=Y"}
+      ]
+    },
+    {
+      "id": "lon-ek-2355-lhr-stn",
+      "destination": "LON",
+      "airline": "Emirates",
+      "outbound": {
+        "departureAt": "2027-05-18T23:55:00+09:00",
+        "arrivalAt": "2027-05-19T12:25:00+01:00",
+        "originCode": "ICN",
+        "destinationCode": "LHR",
+        "durationMinutes": 1230,
+        "stops": ["DXB"]
+      },
+      "return": {
+        "departureAt": "2027-05-24T14:55:00+01:00",
+        "arrivalAt": "2027-05-25T17:00:00+09:00",
+        "originCode": "STN",
+        "destinationCode": "ICN",
+        "durationMinutes": 1085,
+        "stops": ["DXB"]
+      },
+      "fares": [
+        {"platform":"Skyscanner","pricePerPersonKRW":1208700,"totalForTwoKRW":2417400,"fareNote":"2인 검색 결과","searchUrl":"https://www.skyscanner.co.kr/transport/flights/icn/lon/270518/270524/?adultsv2=2&cabinclass=economy&currency=KRW&locale=ko-KR&market=KR"}
+      ]
+    }
+  ]
+}
