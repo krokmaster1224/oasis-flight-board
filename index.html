@@ -3,16 +3,71 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="color-scheme" content="light">
+  <meta name="color-scheme" content="dark">
   <title>오아시스 여행 항공 상황판</title>
   <style>
-    :root{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#17211d;background:#f5f7f4;font-size:14px;line-height:1.4}
-    *{box-sizing:border-box}body{margin:0;padding:12px}.board{max-width:920px;margin:auto;border:1px solid #e1e8e2;border-radius:16px;background:#fff;overflow:hidden;box-shadow:0 5px 20px #15231a0b}
-    header{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:14px 16px 10px}.title{font-size:16px;font-weight:750;letter-spacing:-.02em}.subtitle{margin-top:3px;color:#64736a;font-size:12px}.updated{display:flex;align-items:center;gap:8px;text-align:right;color:#65736b;font-size:11px;white-space:nowrap}.updated strong{display:block;color:#23352b;font-weight:650}
-    button{font:inherit;cursor:pointer}.refresh{border:1px solid #d7e1d8;background:#f8fbf8;border-radius:9px;padding:6px 9px;color:#284b37;font-weight:650}.refresh:hover{background:#eff6f0}.toolbar{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:0 16px 11px}.tabs,.sorts{display:flex;gap:5px}.chip{border:1px solid transparent;border-radius:8px;background:transparent;color:#65736b;padding:6px 10px;font-weight:650}.chip[aria-selected="true"]{background:#e8f2e9;color:#1c6339;border-color:#d5e8d7}.sorts .chip[aria-selected="true"]{background:#f1f3f1;color:#22332a;border-color:#e0e5e0}
-    .hint{margin:0 16px 10px;border-radius:9px;background:#f6f8f6;color:#5f6e64;padding:7px 10px;font-size:11px}.hint.warn{background:#fff7e7;color:#76571a}.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;padding:0 16px 13px}.card{border:1px solid #e3e9e4;border-radius:12px;padding:11px 12px;min-width:0}.card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}.price{font-weight:780;font-size:17px;letter-spacing:-.02em}.per{font-size:10px;color:#728077;font-weight:500}.rank{border-radius:999px;background:#f0f3f0;color:#53635a;padding:3px 7px;font-size:10px;white-space:nowrap}.airline{margin-top:2px;color:#4e5d54;font-size:11px}.times{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:9px 0 6px}.timebox{border-radius:8px;background:#f7f9f7;padding:7px}.date{font-size:10px;color:#718077}.clock{font-size:14px;font-weight:720;margin-top:1px}.place{font-size:10px;color:#56665c}.route{margin-top:3px;font-size:10px;color:#627067}.facts{display:flex;flex-wrap:wrap;gap:5px;margin-top:7px}.fact{border:1px solid #e6ebe7;border-radius:6px;padding:3px 6px;color:#526158;font-size:10px}.connections{font-size:10px;color:#526158;margin-top:6px}.airport-note{margin-top:6px;color:#875b20;font-size:10px}.links{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}.links a{color:#23633b;text-decoration:none;font-size:10px;font-weight:700;border:1px solid #dbe8dd;border-radius:7px;padding:4px 7px}.links a:hover{text-decoration:underline;background:#f3f9f3}.compare{margin-top:6px;color:#758178;font-size:10px}.empty{padding:22px;text-align:center;color:#69766d;border:1px dashed #d6dfd7;border-radius:10px;grid-column:1/-1}.foot{border-top:1px solid #edf0ed;padding:9px 16px 11px;color:#78837b;font-size:10px;display:flex;justify-content:space-between;gap:12px}.foot a{color:#526d5a}
-    @media(max-width:620px){body{padding:0}.board{border-radius:0;border-left:0;border-right:0}.cards{grid-template-columns:1fr;padding-left:11px;padding-right:11px}header{padding:12px 11px 8px}.toolbar{padding:0 11px 9px}.hint{margin-left:11px;margin-right:11px}.foot{padding-left:11px;padding-right:11px}.updated{font-size:10px}}
-  </style>
+  :root {
+    color-scheme: dark;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    color: #e7eee9;
+    background: transparent;
+    font-size: 14px;
+    line-height: 1.4;
+  }
+  * { box-sizing: border-box; }
+  html, body { background: transparent; }
+  body { margin: 0; padding: 0; }
+  .board { max-width: 920px; margin: auto; border: 1px solid #303b35; border-radius: 16px; background: #151b18; overflow: hidden; box-shadow: 0 5px 20px #0003; }
+  header { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; padding: 14px 16px 10px; }
+  .title { font-size: 16px; font-weight: 750; letter-spacing: -.02em; color: #f0f5f1; }
+  .subtitle { margin-top: 3px; color: #9aa9a0; font-size: 12px; }
+  .updated { display: flex; align-items: center; gap: 8px; text-align: right; color: #9aa9a0; font-size: 11px; white-space: nowrap; }
+  .updated strong { display: block; color: #dce8df; font-weight: 650; }
+  button { font: inherit; cursor: pointer; }
+  .refresh { border: 1px solid #3d5546; background: #202a24; border-radius: 9px; padding: 6px 9px; color: #bde2c8; font-weight: 650; }
+  .refresh:hover { background: #29382e; }
+  .toolbar { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 0 16px 11px; }
+  .tabs, .sorts { display: flex; gap: 5px; }
+  .chip { border: 1px solid transparent; border-radius: 8px; background: transparent; color: #a0ada4; padding: 6px 10px; font-weight: 650; }
+  .chip[aria-selected="true"] { background: #20372a; color: #9fe0b1; border-color: #31543c; }
+  .sorts .chip[aria-selected="true"] { background: #29312c; color: #e1e9e3; border-color: #3a443d; }
+  .hint { margin: 0 16px 10px; border-radius: 9px; background: #202723; color: #b2beb5; padding: 7px 10px; font-size: 11px; }
+  .hint.warn { background: #382f1c; color: #f1d48c; }
+  .cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; padding: 0 16px 13px; }
+  .card { border: 1px solid #303b35; border-radius: 12px; background: #1b221e; padding: 11px 12px; min-width: 0; }
+  .card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+  .price { font-weight: 780; font-size: 17px; letter-spacing: -.02em; color: #f0f5f1; }
+  .per { font-size: 10px; color: #a0ada4; font-weight: 500; }
+  .rank { border-radius: 999px; background: #29312c; color: #bec9c1; padding: 3px 7px; font-size: 10px; white-space: nowrap; }
+  .airline { margin-top: 2px; color: #b4c0b7; font-size: 11px; }
+  .times { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 9px 0 6px; }
+  .timebox { border-radius: 8px; background: #222a25; padding: 7px; }
+  .date { font-size: 10px; color: #9eaca2; }
+  .clock { font-size: 14px; font-weight: 720; margin-top: 1px; color: #ecf3ee; }
+  .place { font-size: 10px; color: #bac6bd; }
+  .route { margin-top: 3px; font-size: 10px; color: #b2beb5; }
+  .facts { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 7px; }
+  .fact { border: 1px solid #354039; border-radius: 6px; padding: 3px 6px; color: #c0cbc3; font-size: 10px; }
+  .connections { font-size: 10px; color: #c0cbc3; margin-top: 6px; }
+  .airport-note { margin-top: 6px; color: #efc77c; font-size: 10px; }
+  .links { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 9px; }
+  .links a { color: #a8e0b5; text-decoration: none; font-size: 10px; font-weight: 700; border: 1px solid #35523d; border-radius: 7px; padding: 4px 7px; }
+  .links a:hover { text-decoration: underline; background: #26372b; }
+  .compare { margin-top: 6px; color: #9eaaa1; font-size: 10px; }
+  .empty { padding: 22px; text-align: center; color: #aab6ad; border: 1px dashed #424c45; border-radius: 10px; grid-column: 1 / -1; }
+  .foot { border-top: 1px solid #303a34; padding: 9px 16px 11px; color: #9ca8a0; font-size: 10px; display: flex; justify-content: space-between; gap: 12px; }
+  .foot a { color: #b2c9b7; }
+  @media (max-width: 620px) {
+    body { padding: 0; }
+    .board { border-radius: 0; border-left: 0; border-right: 0; }
+    .cards { grid-template-columns: 1fr; padding-left: 11px; padding-right: 11px; }
+    header { padding: 12px 11px 8px; }
+    .toolbar { padding: 0 11px 9px; }
+    .hint { margin-left: 11px; margin-right: 11px; }
+    .foot { padding-left: 11px; padding-right: 11px; }
+    .updated { font-size: 10px; }
+  }
+</style>
 </head>
 <body>
   <main class="board" aria-live="polite">
